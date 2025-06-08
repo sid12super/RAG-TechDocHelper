@@ -27,6 +27,6 @@ llm = OpenAI(model="gpt-4")
 qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
 
 # Query the system
-query = "What is the purpose of this function?"
+query = "What is the report about?"
 answer = qa_chain.run(query)
 print(answer)
