@@ -1,0 +1,32 @@
+from langchain.chains import RetrievalQA
+from langchain.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.llms import OpenAI
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+import os
+
+# Set OpenAI API key
+os.environ["OPENAI_API_KEY"] = "your-openai-api-key-here"
+
+# Load documentation
+loader = TextLoader("docs/technical_doc.md")
+documents = loader.load()
+
+# Split into chunks
+splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+texts = splitter.split_documents(documents)
+
+# Embed and store
+embeddings = OpenAIEmbeddings()
+vectorstore = FAISS.from_documents(texts, embeddings)
+retriever = vectorstore.as_retriever()
+
+# Set up LLM and chain
+llm = OpenAI(model="gpt-4")
+qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
+
+# Query the system
+query = "What is the purpose of this function?"
+answer = qa_chain.run(query)
+print(answer)
