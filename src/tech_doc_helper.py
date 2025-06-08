@@ -7,7 +7,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = "your-openai-api-key-here"
+os.environ["OPENAI_API_KEY"] = "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"
 
 # Load documentation
 loader = TextLoader("docs/technical_doc.md")
