@@ -27,11 +27,19 @@ is a Retrieval-Augmented Generation (RAG) based tool designed to assist with sea
 ## 📁 Project Structure
 
 RAG-TechDocHelper/
+
 ├── src/
+
 │ ├── tech_doc_helper.py # Main logic for ingestion and querying
+
 │ ├── ingest.py # Converts documents into embeddings
+
 │ └── query.py # Interface for querying ingested docs
+
 ├── data/ # Raw and processed document sources
+
 ├── .env # API keys and config (not tracked in Git)
+
 ├── requirements.txt # Python dependencies
+
 └── README.md # You are here!
