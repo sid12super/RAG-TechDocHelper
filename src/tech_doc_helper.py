@@ -10,7 +10,7 @@ import os
 os.environ["OPENAI_API_KEY"] = "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"
 
 # Load documentation
-loader = TextLoader("docs/technical_doc.md")
+loader = TextLoader("docs/Final_Report.ipynb")
 documents = loader.load()
 
 # Split into chunks
