@@ -1,0 +1,44 @@
+ame: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 black mypy pytest pytest-cov bandit
+
+      - name: Check for required documentation files
+        run: |
+          for file in README.md LICENSE CONTRIBUTING.md; do
+            [[ -f "$file" ]] || (echo "$file missing" && exit 1)
+          done
+
+      - name: Lint with flake8
+        run: flake8 src/
+
+      - name: Format check with black
+        run: black --check src/
+
+      - name: Type check with mypy
+        run: mypy src/
+
+      - name: Security check with bandit
+        run: bandit -r src/
+
+      - name: Run tests
+        run: pytest --cov=src/
