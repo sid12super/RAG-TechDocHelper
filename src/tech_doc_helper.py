@@ -1,20 +1,22 @@
 from langchain.chains import RetrievalQA
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from langchain.document_loaders import TextLoader
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.document_loaders import NotebookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 # Load documentation
-loader = TextLoader("docs/Final_Report.ipynb")
+loader = NotebookLoader("/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb")
 documents = loader.load()
 
 # Split into chunks
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100,separators=["\n\n", "\n", " ", ""])
 texts = splitter.split_documents(documents)
 
 # Embed and store
@@ -23,10 +25,10 @@ vectorstore = FAISS.from_documents(texts, embeddings)
 retriever = vectorstore.as_retriever()
 
 # Set up LLM and chain
-llm = OpenAI(model="gpt-4")
+llm = ChatOpenAI(model="gpt-4", temperature=0)
 qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
 
 # Query the system
-query = "What is the report about?"
-answer = qa_chain.run(query)
+query = "Generate a report of models used in the document"
+answer = qa_chain.invoke(query)
 print(answer)
