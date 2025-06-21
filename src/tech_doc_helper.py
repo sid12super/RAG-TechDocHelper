@@ -13,9 +13,7 @@ load_dotenv()
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 # Load documentation
-loader = NotebookLoader(
-    "/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb"
-)
+loader = NotebookLoader("/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb")
 documents = loader.load()
 
 # Split into chunks
@@ -31,11 +29,7 @@ retriever = vectorstore.as_retriever()
 
 # Set up LLM and chain
 llm = ChatOpenAI(model="gpt-4", temperature=0)
-qa_chain = RetrievalQA.from_chain_type(
-    llm=llm, 
-    chain_type="stuff", 
-    retriever=retriever
-)
+qa_chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
 
 # Query the system
 query = "Generate a report of models used in the document"
