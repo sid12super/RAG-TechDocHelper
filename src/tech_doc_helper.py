@@ -5,6 +5,7 @@ from langchain_community.document_loaders import NotebookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -16,7 +17,9 @@ loader = NotebookLoader("/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb")
 documents = loader.load()
 
 # Split into chunks
-splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100,separators=["\n\n", "\n", " ", ""])
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500, chunk_overlap=100, separators=["\n\n", "\n", " ", ""]
+)
 texts = splitter.split_documents(documents)
 
 # Embed and store
