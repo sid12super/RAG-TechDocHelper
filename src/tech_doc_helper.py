@@ -32,7 +32,9 @@ retriever = vectorstore.as_retriever()
 # Set up LLM and chain
 llm = ChatOpenAI(model="gpt-4", temperature=0)
 qa_chain = RetrievalQA.from_chain_type(
-    llm=llm, chain_type="stuff", retriever=retriever
+    llm=llm, 
+    chain_type="stuff", 
+    retriever=retriever
 )
 
 # Query the system
