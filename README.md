@@ -27,10 +27,17 @@ is a Retrieval-Augmented Generation (RAG) based tool designed to assist with sea
 ## 📁 Project Structure
 
 RAG-TechDocHelper/
+
 ├── .github/
+
 ├── src/
+
 │   └── tech_doc_helper.py
+
 ├── tests/              <-- CREATE THIS DIRECTORY
+
 ├── .flake8
+
 ├── mypy.ini
+
 └── requirements.txt
