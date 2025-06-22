@@ -40,6 +40,16 @@ jobs:
       - name: Security check with bandit
         run: bandit -r src/
 
+      - name: Verify OPENAI_API_KEY Length
+        run: |
+          if [ ${#OPENAI_API_KEY} -lt 15 ]; then
+            echo "::error::GitHub secret is either not set or is too short."
+            exit 1
+          fi
+          echo "Secret length check passed. Key appears to be valid."
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
       - name: Run tests
         run: pytest --cov=src/
         env:
