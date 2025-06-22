@@ -5,6 +5,7 @@ from langchain_community.document_loaders import NotebookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 load_dotenv()
 
@@ -18,8 +19,16 @@ if api_key is None:
     )
 os.environ["OPENAI_API_KEY"] = api_key
 
-# Load documentation
-loader = NotebookLoader("/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb")
+# --- Construct a portable path to the documentation file ---
+# Get the directory of the current script (src/)
+script_dir = Path(__file__).resolve().parent
+# Get the project root directory (the parent of src/)
+project_root = script_dir.parent
+# Build the path to the notebook file
+notebook_path = project_root / "docs" / "Final_Report.ipynb"
+
+# Load documentation using the new, portable path
+loader = NotebookLoader(str(notebook_path))
 documents = loader.load()
 
 # Split into chunks
