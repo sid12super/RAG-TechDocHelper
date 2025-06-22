@@ -34,7 +34,7 @@ RAG-TechDocHelper/
 
 │   └── tech_doc_helper.py
 
-├── tests/              <-- CREATE THIS DIRECTORY
+├── tests/              
 
 ├── .flake8
 
