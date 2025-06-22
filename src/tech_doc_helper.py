@@ -10,7 +10,10 @@ load_dotenv()
 
 
 # Set OpenAI API key
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
+if api_key is None:
+    raise ValueError("OPENAI_API_KEY environment variable not set. Please set it in your .env file.")
+os.environ["OPENAI_API_KEY"] = api_key
 
 # Load documentation
 loader = NotebookLoader("/workspaces/RAG-TechDocHelper/docs/Final_Report.ipynb")
